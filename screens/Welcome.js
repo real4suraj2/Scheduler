@@ -23,16 +23,19 @@ export default ({ navigation }) => {
 						...styles.mainHeading,
 					}}
 				>
-					Welcome at{" "}
+					Welcome to{" "}
 				</Text>
-				<Text
-					style={{
-						...styles.mainHeading,
-						color: "#B10DC9",
-					}}
-				>
-					Scheduler
+				<Text style={{ ...styles.mainHeading }}>
+					<Text
+						style={{
+							color: "#B10DC9",
+						}}
+					>
+						Scheduler
+					</Text>
+					,
 				</Text>
+
 				<Text
 					style={{
 						...styles.subHeading,
@@ -61,7 +64,7 @@ export default ({ navigation }) => {
 					marginBottom: 16,
 				}}
 			>
-				<TouchableOpacity>
+				<TouchableOpacity onPress={() => navigation.push("Login")}>
 					<LinearGradient
 						start={{ x: 0, y: 0 }}
 						end={{ x: 1, y: 1 }}
@@ -95,6 +98,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: "center",
 		alignItems: "center",
+		backgroundColor: "white",
 	},
 	mainHeading: {
 		fontSize: 32,
