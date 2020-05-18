@@ -1,5 +1,16 @@
 import React from "react";
-import { Modal, View, Text, ScrollView, StyleSheet } from "react-native";
+import {
+	Modal,
+	View,
+	Text,
+	ScrollView,
+	StyleSheet,
+	TouchableOpacity,
+	Dimensions,
+} from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+
+const { width, height } = Dimensions.get("window");
 
 export default ({ showTerms, setShowTerms }) => {
 	return (
@@ -8,7 +19,14 @@ export default ({ showTerms, setShowTerms }) => {
 			onRequestClose={() => setShowTerms(false)}
 			animationType="slide"
 		>
-			<View style={{ flex: 1, backgroundColor: "white" }}>
+			<View
+				style={{
+					flex: 1,
+					backgroundColor: "white",
+					justifyContent: "center",
+					alignItems: "center",
+				}}
+			>
 				<Text
 					style={{
 						textAlign: "center",
@@ -73,7 +91,7 @@ export default ({ showTerms, setShowTerms }) => {
 						consequat nisi lorem eu turpis. Aliquam vel tempor eros.
 					</Text>
 					<Text style={{ ...styles.textStyle }}>
-						8.Sed vel metus id ante facilisis pharetra at ac quam.
+						8. Sed vel metus id ante facilisis pharetra at ac quam.
 						Nam non convallis nunc, sit amet commodo quam. Aenean
 						malesuada mauris lectus, in sodales sapien tincidunt
 						feugiat.
@@ -92,6 +110,20 @@ export default ({ showTerms, setShowTerms }) => {
 						ultricies.
 					</Text>
 				</ScrollView>
+				<TouchableOpacity
+					style={{ ...styles.mainButton, marginTop: 12 }}
+					onPress={() => setShowTerms(false)}
+				>
+					<Text
+						style={{
+							...styles.mainHeading,
+							fontSize: 18,
+							color: "#000",
+						}}
+					>
+						I Understand
+					</Text>
+				</TouchableOpacity>
 			</View>
 		</Modal>
 	);
@@ -103,5 +135,18 @@ const styles = StyleSheet.create({
 		color: "gray",
 		fontSize: 18,
 		marginBottom: 16,
+	},
+	mainButton: {
+		width: width * 0.85,
+		paddingHorizontal: 16,
+		paddingVertical: 6,
+		borderRadius: 6,
+		marginBottom: 12,
+		borderWidth: StyleSheet.hairlineWidth,
+	},
+	mainHeading: {
+		fontSize: 32,
+		fontWeight: "bold",
+		textAlign: "center",
 	},
 });
