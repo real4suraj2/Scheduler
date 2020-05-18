@@ -12,6 +12,8 @@
     "@react-navigation/native": "^5.4.0",
     "@react-navigation/stack": "^5.3.7",
     "expo": "~37.0.3",
+    "expo-facebook": "~8.1.0",
+    "expo-google-app-auth": "^8.1.0",
     "expo-linear-gradient": "~8.1.0",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
