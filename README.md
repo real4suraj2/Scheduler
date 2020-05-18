@@ -1,3 +1,3 @@
 # Scheduler
 
-## Note : Configures `constants/` directory for `social-config.js`
+## Note : Configure `constants/` directory for `social-config.js` first.
