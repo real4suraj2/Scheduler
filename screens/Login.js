@@ -1,5 +1,5 @@
 //Native Library Imports
-import React, { useCallback, useState } from "react";
+import React, { useCallback } from "react";
 import {
 	StyleSheet,
 	View,
@@ -12,22 +12,19 @@ import {
 //Icons
 import { FontAwesome } from "@expo/vector-icons";
 
+//Reanimated
+import Animated, { Easing } from "react-native-reanimated";
+
 //Social Imports
 import * as Facebook from "expo-facebook";
 import * as Google from "expo-google-app-auth";
-
-//Components
-import BackButton from "../components/BackButton";
-import Loading from "../components/Loading";
 
 //Configs
 import { FACEBOOK_APP_ID, GOOGLE_ANDROID_ID } from "../constants/social-config";
 
 const { width, height } = Dimensions.get("window");
 
-export default ({ navigation }) => {
-	const [loading, setLoading] = useState(false);
-
+export default ({ navigation, translateY, setLoading }) => {
 	const handleAuth = useCallback(async (type) => {
 		switch (type) {
 			case "facebook":
@@ -62,7 +59,9 @@ export default ({ navigation }) => {
 					[
 						{
 							text: "OK",
-							onPress: () => {},
+							onPress: () => {
+								navigation.navigate("Home");
+							},
 						},
 					],
 					{ cancelable: false }
@@ -105,11 +104,19 @@ export default ({ navigation }) => {
 
 	return (
 		<View style={{ ...styles.container }}>
-			<BackButton
-				navigation={navigation}
-				direction={{ left: 0, paddingLeft: 16 }}
-				color={"black"}
-			/>
+			<View style={{ marginBottom: 12 }}>
+				<TouchableOpacity
+					onPress={() => {
+						Animated.timing(translateY, {
+							toValue: 0,
+							duration: 500,
+							easing: Easing.linear,
+						}).start();
+					}}
+				>
+					<FontAwesome name="angle-down" size={32} color="#000" />
+				</TouchableOpacity>
+			</View>
 			<View
 				style={{
 					...styles.socialContainer,
@@ -140,7 +147,6 @@ export default ({ navigation }) => {
 						style={{
 							...styles.socialButton,
 							backgroundColor: "#3A5896",
-							marginTop: 16,
 						}}
 					>
 						<Text style={{ ...styles.text }}>
@@ -154,7 +160,6 @@ export default ({ navigation }) => {
 					</View>
 				</TouchableOpacity>
 			</View>
-			{loading && <Loading />}
 		</View>
 	);
 };

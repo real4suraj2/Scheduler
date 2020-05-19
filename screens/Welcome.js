@@ -9,86 +9,127 @@ import {
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
+//Reanimated
+import Animated, { Easing } from "react-native-reanimated";
+
 //Components
 import TermsOfService from "../components/TermsOfService";
+import Loading from "../components/Loading";
+
+//Screens
+import Login from "./Login";
 
 const { width, height } = Dimensions.get("window");
 export default ({ navigation }) => {
 	const [showTerms, setShowTerms] = useState(false);
+	const [loading, setLoading] = useState(false);
+	const [translateY, setTranslateY] = useState(new Animated.Value(0));
 	return (
-		<View style={{ ...styles.container }}>
-			<View style={{ flex: 0.3, marginTop: 32 }}>
-				<Text
-					style={{
-						...styles.mainHeading,
-					}}
-				>
-					Welcome to{" "}
-				</Text>
-				<Text style={{ ...styles.mainHeading }}>
+		<View style={{ ...styles.container, flex: 1 }}>
+			<Animated.View
+				style={{
+					...styles.container,
+					flex: 1,
+					transform: [{ translateY: translateY }],
+				}}
+			>
+				<View style={{ flex: 0.3, marginTop: 32 }}>
 					<Text
 						style={{
-							color: "#B10DC9",
+							...styles.mainHeading,
 						}}
 					>
-						Scheduler
+						Welcome to{" "}
 					</Text>
-					,
-				</Text>
-
-				<Text
-					style={{
-						...styles.subHeading,
-					}}
-				>
-					Scheduling made easier..
-				</Text>
-			</View>
-			<View
-				style={{
-					flex: 0.5,
-					justifyContent: "flex-start",
-				}}
-			>
-				<Image
-					source={require("../assets/tick.jpg")}
-					resizeMode="contain"
-					style={{ ...styles.mainImage }}
-				/>
-			</View>
-
-			<View
-				style={{
-					flex: 0.2,
-					justifyContent: "flex-end",
-					marginBottom: 16,
-				}}
-			>
-				<TouchableOpacity onPress={() => navigation.push("Login")}>
-					<LinearGradient
-						start={{ x: 0, y: 0 }}
-						end={{ x: 1, y: 1 }}
-						colors={["#F012BE", "#85144b"]}
-						style={{ ...styles.mainButton }}
-					>
+					<Text style={{ ...styles.mainHeading }}>
 						<Text
 							style={{
-								...styles.mainHeading,
-								fontSize: 18,
-								color: "#fff",
+								color: "#B10DC9",
 							}}
 						>
-							Login
+							Scheduler
 						</Text>
-					</LinearGradient>
-				</TouchableOpacity>
-				<TouchableOpacity onPress={() => setShowTerms(true)}>
-					<Text style={{ ...styles.subButton }}>
-						Terms of service{" "}
+						,
 					</Text>
-				</TouchableOpacity>
-			</View>
-			<TermsOfService showTerms={showTerms} setShowTerms={setShowTerms} />
+
+					<Text
+						style={{
+							...styles.subHeading,
+						}}
+					>
+						Scheduling made easier..
+					</Text>
+				</View>
+				<View
+					style={{
+						flex: 0.5,
+						justifyContent: "flex-start",
+					}}
+				>
+					<Image
+						source={require("../assets/tick.jpg")}
+						resizeMode="contain"
+						style={{ ...styles.mainImage }}
+					/>
+				</View>
+
+				<View
+					style={{
+						flex: 0.2,
+						justifyContent: "flex-end",
+						marginBottom: 16,
+					}}
+				>
+					<TouchableOpacity
+						onPress={() => {
+							Animated.timing(translateY, {
+								toValue: -260,
+								duration: 500,
+								easing: Easing.linear,
+							}).start();
+						}}
+					>
+						<LinearGradient
+							start={{ x: 0, y: 0 }}
+							end={{ x: 1, y: 1 }}
+							colors={["#F012BE", "#85144b"]}
+							style={{ ...styles.mainButton }}
+						>
+							<Text
+								style={{
+									...styles.mainHeading,
+									fontSize: 18,
+									color: "#fff",
+								}}
+							>
+								Login
+							</Text>
+						</LinearGradient>
+					</TouchableOpacity>
+					<TouchableOpacity onPress={() => setShowTerms(true)}>
+						<Text style={{ ...styles.subButton }}>
+							Terms of service{" "}
+						</Text>
+					</TouchableOpacity>
+				</View>
+				<TermsOfService
+					showTerms={showTerms}
+					setShowTerms={setShowTerms}
+				/>
+			</Animated.View>
+			<Animated.View
+				style={{
+					...styles.loginContainer,
+					transform: [{ translateY: translateY }],
+				}}
+			>
+				<Login
+					navigation={navigation}
+					translateY={translateY}
+					setLoading={setLoading}
+				/>
+			</Animated.View>
+			{loading && <Loading />}
 		</View>
 	);
 };
@@ -125,5 +166,9 @@ const styles = StyleSheet.create({
 		textDecorationLine: "underline",
 		color: "gray",
 		textAlign: "center",
+	},
+	loginContainer: {
+		position: "absolute",
+		top: height + 100,
 	},
 });
