@@ -15,6 +15,9 @@ import Welcome from "../screens/Welcome";
 import Login from "../screens/Login"; //Obsolete
 import Dashboard from "../screens/Dashboard";
 import Profile from "../screens/Profile";
+import AddPlaces from "../screens/AddPlaces";
+import Slot from "../screens/Slot";
+import Merchant from "../screens/Merchant";
 
 //Navigators
 const MainStack = createStackNavigator();
@@ -22,7 +25,7 @@ const Tabs = createBottomTabNavigator();
 
 const MainStackScreens = ({ navigation }) => {
 	return (
-		<MainStack.Navigator initialRouteName="Home">
+		<MainStack.Navigator initialRouteName="Merchant">
 			<MainStack.Screen name="Welcome" options={{ headerShown: false }}>
 				{(props) => <Welcome {...props} />}
 			</MainStack.Screen>
@@ -32,6 +35,15 @@ const MainStackScreens = ({ navigation }) => {
 			<MainStack.Screen name="Home" options={{ headerShown: false }}>
 				{(props) => <TabScreens {...props} />}
 			</MainStack.Screen>
+			<MainStack.Screen name="AddPlaces" options={{ headerShown: false }}>
+				{(props) => <AddPlaces {...props} />}
+			</MainStack.Screen>
+			<MainStack.Screen name="Slot" options={{ headerShown: false }}>
+				{(props) => <Slot {...props} />}
+			</MainStack.Screen>
+			<MainStack.Screen name="Merchant" options={{ headerShown: false }}>
+				{(props) => <Merchant {...props} />}
+			</MainStack.Screen>
 		</MainStack.Navigator>
 	);
 };
@@ -39,7 +51,8 @@ const MainStackScreens = ({ navigation }) => {
 const TabScreens = ({ navigation }) => {
 	return (
 		<Tabs.Navigator
-			initialRouteName="Profile"
+			initialRouteName="Dashboard"
+			lazy={false}
 			screenOptions={({ route }) => ({
 				tabBarIcon: ({ focused, color, size }) => {
 					let iconName;

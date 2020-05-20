@@ -7,6 +7,7 @@ import {
 	TouchableOpacity,
 	Dimensions,
 	Alert,
+	AsyncStorage,
 } from "react-native";
 
 //Icons
@@ -20,7 +21,12 @@ import * as Facebook from "expo-facebook";
 import * as Google from "expo-google-app-auth";
 
 //Configs
-import { FACEBOOK_APP_ID, GOOGLE_ANDROID_ID } from "../constants/social-config";
+import {
+	FACEBOOK_APP_ID,
+	GOOGLE_ANDROID_ID,
+	GOOGLE_STANDALONE_APP_ID,
+} from "../constants/social-config";
+import { db } from "../constants/firebase-config";
 
 const { width, height } = Dimensions.get("window");
 
@@ -39,6 +45,24 @@ export default ({ navigation, translateY, setLoading }) => {
 		}
 	});
 
+	const handleNavigate = async (id, token) => {
+		const _setData = async () => {
+			await AsyncStorage.setItem("id", id);
+			await AsyncStorage.setItem("token", token);
+		};
+		await _setData();
+		navigation.navigate("Home");
+	};
+
+	const saveData = async (name, method, email, id, photoUri) => {
+		await db.ref("users/" + id).set({
+			method,
+			email,
+			photoUri,
+			name: name[0].toUpperCase() + name.slice(1),
+		});
+	};
+
 	const handleFacebook = useCallback(async () => {
 		try {
 			await Facebook.initializeAsync(FACEBOOK_APP_ID);
@@ -53,15 +77,21 @@ export default ({ navigation, translateY, setLoading }) => {
 					`https://graph.facebook.com/me?fields=id,name,email,picture.type(large)&access_token=${token}`
 				);
 				const json = await response.json();
+				await saveData(
+					json.name,
+					"Facebook",
+					json.email === undefined ? "Not Assigned" : json.email,
+					json.id,
+					json.picture.data.url
+				);
 				Alert.alert(
 					`Hi ${json.name}`,
 					"Welcome to Scheduler",
 					[
 						{
 							text: "OK",
-							onPress: () => {
-								navigation.navigate("Home");
-							},
+							onPress: async () =>
+								await handleNavigate(json.id, token),
 						},
 					],
 					{ cancelable: false }
@@ -78,9 +108,16 @@ export default ({ navigation, translateY, setLoading }) => {
 			const { type, accessToken, user } = await Google.logInAsync({
 				iosClientId: "",
 				androidClientId: GOOGLE_ANDROID_ID,
-				androidStandaloneAppClientId: "",
+				androidStandaloneAppClientId: GOOGLE_STANDALONE_APP_ID,
 				scopes: ["profile", "email"],
 			});
+			await saveData(
+				user.name,
+				"Google",
+				user.email,
+				user.id,
+				user.photoUrl
+			);
 			setLoading(false);
 			if (type === "success") {
 				Alert.alert(
@@ -89,7 +126,8 @@ export default ({ navigation, translateY, setLoading }) => {
 					[
 						{
 							text: "OK",
-							onPress: () => {},
+							onPress: async () =>
+								await handleNavigate(user.id, accessToken),
 						},
 					],
 					{ cancelable: false }

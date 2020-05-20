@@ -1,28 +1,32 @@
 {
-  "expo": {
-    "name": "Scheduler",
-    "slug": "Scheduler",
-    "platforms": [
-      "ios",
-      "android",
-      "web"
-    ],
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "updates": {
-      "fallbackToCacheTimeout": 0
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true
-    }
-  }
+	"expo": {
+		"name": "Scheduler",
+		"slug": "Scheduler",
+		"platforms": ["ios", "android", "web"],
+		"version": "1.0.0",
+		"orientation": "portrait",
+		"icon": "./assets/icon.png",
+		"splash": {
+			"image": "./assets/splash.png",
+			"resizeMode": "contain",
+			"backgroundColor": "#ffffff"
+		},
+		"updates": {
+			"fallbackToCacheTimeout": 0
+		},
+		"assetBundlePatterns": ["**/*"],
+		"ios": {
+			"supportsTablet": true
+		},
+		"android": {
+			"package": "com.surajapps.scheduler",
+			"versionCode": 1,
+			"config": {
+				"googleSignIn": {
+					"apiKey": "AIzaSyBGWzmqFxTRu2I3l61R1YITYFAHA9EjD0Q",
+					"certificateHash": "6D37A1DD42E2FDF22A2E5B16931C154FBD3F500E"
+				}
+			}
+		}
+	}
 }

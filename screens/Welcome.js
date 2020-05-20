@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
 	StyleSheet,
 	View,
@@ -6,11 +6,15 @@ import {
 	Image,
 	Dimensions,
 	TouchableOpacity,
+	AsyncStorage,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
 //Reanimated
 import Animated, { Easing } from "react-native-reanimated";
+
+//Helpers
+import navigationReset from "../helpers/navigationReset";
 
 //Components
 import TermsOfService from "../components/TermsOfService";
@@ -24,6 +28,24 @@ export default ({ navigation }) => {
 	const [showTerms, setShowTerms] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const [translateY, setTranslateY] = useState(new Animated.Value(0));
+	useEffect(() => {
+		setLoading(true);
+		const _retreiveData = async () => {
+			try {
+				const id = await AsyncStorage.getItem("id");
+				const token = await AsyncStorage.getItem("token");
+				if (id != null && token != null) {
+					navigationReset(navigation, "Home");
+					navigation.navigate("Home");
+				}
+			} catch (e) {
+				console.log("Error !");
+			}
+			setLoading(false);
+		};
+		_retreiveData();
+	}, []);
+
 	return (
 		<View style={{ ...styles.container, flex: 1 }}>
 			<Animated.View
@@ -105,6 +127,23 @@ export default ({ navigation }) => {
 								Login
 							</Text>
 						</LinearGradient>
+					</TouchableOpacity>
+					<TouchableOpacity
+						onPress={() => navigation.push("Merchant")}
+						style={{
+							...styles.mainButton,
+							backgroundColor: "#B10DC9",
+						}}
+					>
+						<Text
+							style={{
+								...styles.mainHeading,
+								fontSize: 18,
+								color: "#fff",
+							}}
+						>
+							Login As Merchant
+						</Text>
 					</TouchableOpacity>
 					<TouchableOpacity onPress={() => setShowTerms(true)}>
 						<Text style={{ ...styles.subButton }}>
