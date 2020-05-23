@@ -1,5 +1,5 @@
 //Native Library Imports
-import React, { useState, useLayoutEffect} from "react";
+import React, { useState, useLayoutEffect } from "react";
 import {
 	View,
 	Text,
@@ -48,10 +48,10 @@ export default ({ navigation }) => {
 	const [showScanner, setShowScanner] = useState(false);
 
 	useLayoutEffect(() => {
-    	navigation.setOptions({
-      		tabBarVisible: !showLogin
-    	});
-  	}, [navigation, showLogin]);
+		navigation.setOptions({
+			tabBarVisible: !showLogin,
+		});
+	}, [navigation, showLogin]);
 
 	const setData = async (id) => {
 		await db
@@ -238,13 +238,13 @@ export default ({ navigation }) => {
 						<Text style={{ ...styles.text }}>
 							Address : {details.address}
 						</Text>
-						<Text style={{ ...styles.text, marginBottom : 12 }}>
+						<Text style={{ ...styles.text, marginBottom: 12 }}>
 							Permissible Allowance / Hr : {details.name}
 						</Text>
 						<TouchableOpacity
 							onPress={() => setShowScanner(true)}
 							style={{
-								...styles.validateContainer
+								...styles.validateContainer,
 							}}
 						>
 							<Text style={{ ...styles.text }}>
@@ -253,7 +253,7 @@ export default ({ navigation }) => {
 							<Feather name="camera" size={32} color="#000" />
 						</TouchableOpacity>
 					</View>
-					<View style={{ flex: 0.2, justifyContent: "center"}}>
+					<View style={{ flex: 0.2, justifyContent: "center" }}>
 						<Text style={{ ...styles.mainHeading }}>Visitors</Text>
 					</View>
 					<View style={{ flex: 0.4, justifyContent: "flex-start" }}>
@@ -305,7 +305,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: "center",
 		alignItems: "center",
-		backgroundColor : '#fff'
+		backgroundColor: "#fff",
 	},
 	inputContainer: {
 		flexDirection: "row",
@@ -349,14 +349,14 @@ const styles = StyleSheet.create({
 		marginTop: 12,
 		borderRadius: 6,
 	},
-	validateContainer:{
+	validateContainer: {
 		flexDirection: "row",
 		marginTop: 12,
 		justifyContent: "center",
 		alignItems: "center",
-		borderWidth : StyleSheet.hairlineWidth,
-		paddingVertical : 6,
+		borderWidth: StyleSheet.hairlineWidth,
+		paddingVertical: 6,
 		paddingHorizontal: 12,
-		borderRadius : 6
-	}
+		borderRadius: 6,
+	},
 });

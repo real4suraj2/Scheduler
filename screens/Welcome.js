@@ -171,7 +171,7 @@ export default ({ navigation }) => {
 					</TouchableOpacity>
 					<TouchableOpacity
 						style={{ marginBottom: 12 }}
-						onPress={() => setShowTerms(true)}
+						onPress={() => {}}
 					>
 						<Text style={{ ...styles.subButton }}>
 							Trouble Logging In?

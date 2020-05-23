@@ -1,5 +1,5 @@
 //Native Library Imports
-import React, { useState } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import {
 	View,
 	Text,
@@ -20,6 +20,12 @@ export default ({ navigation }) => {
 	const [aadhar, setAadhar] = useState("");
 	const [aarogyaSetu, setAarogyaSetu] = useState("");
 	const [registeredId, setRegisteredId] = useState("");
+
+	useLayoutEffect(() => {
+		navigation.setOptions({
+			headerRight: () => null,
+		});
+	}, [navigation]);
 
 	return (
 		<View style={{ ...styles.container, marginTop: 12 }}>

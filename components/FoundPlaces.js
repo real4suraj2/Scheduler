@@ -10,6 +10,9 @@ import {
 	Alert,
 } from "react-native";
 
+//Expo Deep Linking
+import * as Linking from "expo-linking";
+
 //Icons
 import { Feather } from "@expo/vector-icons";
 
@@ -91,7 +94,23 @@ export default ({ search, all, setLoading, showSchedule, setShowSchedule }) => {
 										Alert.alert(
 											json[item].name,
 											`Address: ${json[item].address}\n\nPermissible Allowance Per Hour: ${json[item].range}`,
-											[{ text: "OK", onPress: () => {} }],
+											[
+												{
+													text: "OK",
+													onPress: () => {},
+												},
+												{
+													text: "Show in Map",
+													onPress: () =>
+														Linking.openURL(
+															"https://www.google.com/maps/search/?api=1&query=" +
+																encodeURIComponent(
+																	json[item]
+																		.address
+																)
+														),
+												},
+											],
 											{ cancelable: true }
 										);
 									}}

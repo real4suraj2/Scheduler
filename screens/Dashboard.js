@@ -71,11 +71,12 @@ export default ({ navigation }) => {
 									);
 							}
 						} else if (val == null) {
+							setLoading(false);
 						}
 					},
-					(error) => console.log("Error")
+					(error) => setLoading(false)
 				)
-				.catch((err) => {});
+				.catch((err) => setLoading(false));
 		}, 1000);
 		return () => clearInterval(interval);
 	}, [id]);
