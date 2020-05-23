@@ -7,6 +7,7 @@ import {
 	TextInput,
 	Dimensions,
 	TouchableOpacity,
+	Alert,
 } from "react-native";
 
 //Picker Library
@@ -37,9 +38,34 @@ export default ({ navigation }) => {
 
 	const handleSubmit = async () => {
 		setLoading(true);
+		if (
+			name == "" ||
+			address == "" ||
+			range == "" ||
+			range > 100 ||
+			opening == 0 ||
+			closing == 0
+		) {
+			setLoading(false);
+			return Alert.alert(
+				"Invalid data",
+				"Please check the data for all the fields",
+				[{ text: "OK", onPress: () => {} }],
+				{ cancelable: false }
+			);
+		}
 		const start = Number(opening.slice(0, 2));
 		const end =
 			Number(closing.slice(0, 2)) == 0 ? 24 : Number(closing.slice(0, 2));
+		if (start >= end) {
+			setLoading(false);
+			return Alert.alert(
+				"Invalid Range",
+				"Please provid valid range for working hours.",
+				[{ text: "OK", onPress: () => {} }],
+				{ cancelable: false }
+			);
+		}
 		const uuid = uuidv4();
 		const intervals = buildTimeIntervals();
 		for (let i = start; i < end; ++i) {
@@ -67,7 +93,12 @@ export default ({ navigation }) => {
 		});
 
 		setLoading(false);
-		navigation.push("Dashboard");
+		Alert.alert(
+			"Successful",
+			`Please write down the UUID for password generation\nUID: ${uuid}`,
+			[{ text: "OK", onPress: () => navigation.push("Dashboard") }],
+			{ cancelable: false }
+		);
 	};
 
 	return (

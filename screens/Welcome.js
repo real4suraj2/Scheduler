@@ -69,7 +69,7 @@ export default ({ navigation }) => {
 								color: "#B10DC9",
 							}}
 						>
-							Scheduler
+							Suvidha
 						</Text>
 						,
 					</Text>
@@ -93,6 +93,15 @@ export default ({ navigation }) => {
 						resizeMode="contain"
 						style={{ ...styles.mainImage }}
 					/>
+					<TouchableOpacity
+						onPress={() => navigation.navigate("MockLogin")}
+						style={{
+							alignItems: "flex-end",
+							marginRight: 28,
+						}}
+					>
+						<Text style={{ ...styles.mockLogin }}>Mock Login</Text>
+					</TouchableOpacity>
 				</View>
 
 				<View
@@ -209,5 +218,9 @@ const styles = StyleSheet.create({
 	loginContainer: {
 		position: "absolute",
 		top: height + 100,
+	},
+	mockLogin: {
+		textDecorationLine: "underline",
+		color: "gray",
 	},
 });

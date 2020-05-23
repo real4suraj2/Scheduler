@@ -86,7 +86,7 @@ export default ({ navigation, translateY, setLoading }) => {
 				);
 				Alert.alert(
 					`Hi ${json.name}`,
-					"Welcome to Scheduler",
+					"Welcome to Suvidha",
 					[
 						{
 							text: "OK",
@@ -122,7 +122,7 @@ export default ({ navigation, translateY, setLoading }) => {
 			if (type === "success") {
 				Alert.alert(
 					`Hi ${user.name}`,
-					"Welcome to Scheduler",
+					"Welcome to Suvidha",
 					[
 						{
 							text: "OK",

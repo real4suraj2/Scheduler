@@ -18,6 +18,8 @@ import Profile from "../screens/Profile";
 import AddPlaces from "../screens/AddPlaces";
 import Slot from "../screens/Slot";
 import Merchant from "../screens/Merchant";
+import Help from "../screens/Help";
+import MockLogin from "../screens/MockLogin";
 
 //Navigators
 const MainStack = createStackNavigator();
@@ -25,7 +27,7 @@ const Tabs = createBottomTabNavigator();
 
 const MainStackScreens = ({ navigation }) => {
 	return (
-		<MainStack.Navigator initialRouteName="Merchant">
+		<MainStack.Navigator initialRouteName="Welcome">
 			<MainStack.Screen name="Welcome" options={{ headerShown: false }}>
 				{(props) => <Welcome {...props} />}
 			</MainStack.Screen>
@@ -43,6 +45,9 @@ const MainStackScreens = ({ navigation }) => {
 			</MainStack.Screen>
 			<MainStack.Screen name="Merchant" options={{ headerShown: false }}>
 				{(props) => <Merchant {...props} />}
+			</MainStack.Screen>
+			<MainStack.Screen name="MockLogin" options={{ headerShown: false }}>
+				{(props) => <MockLogin {...props} />}
 			</MainStack.Screen>
 		</MainStack.Navigator>
 	);
@@ -63,6 +68,9 @@ const TabScreens = ({ navigation }) => {
 						case "Profile":
 							iconName = "user";
 							break;
+						case "Help":
+							iconName = "infocirlce";
+							break;
 						default:
 							break;
 					}
@@ -78,6 +86,7 @@ const TabScreens = ({ navigation }) => {
 		>
 			<Tabs.Screen name="Dashboard" component={Dashboard} />
 			<Tabs.Screen name="Profile" component={Profile} />
+			<Tabs.Screen name="Help" component={Help} />
 		</Tabs.Navigator>
 	);
 };
