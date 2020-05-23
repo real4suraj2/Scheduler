@@ -1,5 +1,5 @@
 //Native Library Imports
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useLayoutEffect } from "react";
 import {
 	View,
 	Text,
@@ -17,6 +17,9 @@ import { StackActions } from "@react-navigation/native";
 //Linear Gradient
 import { LinearGradient } from "expo-linear-gradient";
 
+//Icons
+import { AntDesign } from "@expo/vector-icons";
+
 //Constants
 import { db } from "../constants/firebase-config";
 
@@ -30,6 +33,15 @@ import Loading from "../components/Loading";
 const { width, height } = Dimensions.get("window");
 
 export default ({ navigation, route }) => {
+	
+	if(route.params == undefined || route.params.slot == undefined){
+		return (
+			<View style={{...styles.container}}>
+				<AntDesign name="creditcard" size={90} color="#000"/>
+				<Text style={{...styles.mainHeading, fontSize: 24}}>You Haven't Occupied A Slot Yet</Text>
+			</View>
+		)
+	}
 	const { slot, expiresAt, place, info, id } = route.params;
 	//-------------Mock Data----------------
 	// const { slot, expiresAt, place, info } = {
@@ -45,6 +57,15 @@ export default ({ navigation, route }) => {
 	//--------------------------------------
 	const [loading, setLoading] = useState(false);
 	const [valid, setValid] = useState(false);
+
+	useLayoutEffect(() => {
+    	navigation.setOptions({
+      		headerStyle:{
+      			backgroundColor:"#F012BE"
+      		}
+    	});
+  	}, [navigation]);
+
 	useEffect(() => {
 		const interval = setInterval(() => {
 			const date = new Date().getTime();
@@ -75,7 +96,7 @@ export default ({ navigation, route }) => {
 				</View>
 				<View style={{ ...styles.container, flex: 0.6, marginTop: 32 }}>
 					<Text style={{ ...styles.text, ...styles.mainHeading }}>
-						Info
+						Confirmation
 					</Text>
 					<Text style={{ ...styles.text }}>UID: {id}</Text>
 					<Text style={{ ...styles.text }}>

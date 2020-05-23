@@ -1,5 +1,5 @@
 //Native Library Imports
-import React, { useState } from "react";
+import React, { useState, useLayoutEffect} from "react";
 import {
 	View,
 	Text,
@@ -46,6 +46,12 @@ export default ({ navigation }) => {
 	const [showLogin, setShowLogin] = useState(true);
 	const [visitors, setVisitors] = useState({});
 	const [showScanner, setShowScanner] = useState(false);
+
+	useLayoutEffect(() => {
+    	navigation.setOptions({
+      		tabBarVisible: !showLogin
+    	});
+  	}, [navigation, showLogin]);
 
 	const setData = async (id) => {
 		await db
@@ -216,7 +222,7 @@ export default ({ navigation }) => {
 				<View style={{ ...styles.container }}>
 					<View
 						style={{
-							flex: 0.3,
+							flex: 0.4,
 							justifyContent: "flex-end",
 							alignItems: "center",
 						}}
@@ -232,16 +238,13 @@ export default ({ navigation }) => {
 						<Text style={{ ...styles.text }}>
 							Address : {details.address}
 						</Text>
-						<Text style={{ ...styles.text }}>
+						<Text style={{ ...styles.text, marginBottom : 12 }}>
 							Permissible Allowance / Hr : {details.name}
 						</Text>
 						<TouchableOpacity
 							onPress={() => setShowScanner(true)}
 							style={{
-								flexDirection: "row",
-								marginTop: 12,
-								justifyContent: "center",
-								alignItems: "center",
+								...styles.validateContainer
 							}}
 						>
 							<Text style={{ ...styles.text }}>
@@ -250,10 +253,10 @@ export default ({ navigation }) => {
 							<Feather name="camera" size={32} color="#000" />
 						</TouchableOpacity>
 					</View>
-					<View style={{ flex: 0.1, justifyContent: "center" }}>
+					<View style={{ flex: 0.2, justifyContent: "center"}}>
 						<Text style={{ ...styles.mainHeading }}>Visitors</Text>
 					</View>
-					<View style={{ flex: 0.5, justifyContent: "flex-start" }}>
+					<View style={{ flex: 0.4, justifyContent: "flex-start" }}>
 						<FlatList
 							keyExtractor={(item, index) => `${index}`}
 							data={visitors == null ? [] : Object.keys(visitors)}
@@ -302,6 +305,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: "center",
 		alignItems: "center",
+		backgroundColor : '#fff'
 	},
 	inputContainer: {
 		flexDirection: "row",
@@ -345,4 +349,14 @@ const styles = StyleSheet.create({
 		marginTop: 12,
 		borderRadius: 6,
 	},
+	validateContainer:{
+		flexDirection: "row",
+		marginTop: 12,
+		justifyContent: "center",
+		alignItems: "center",
+		borderWidth : StyleSheet.hairlineWidth,
+		paddingVertical : 6,
+		paddingHorizontal: 12,
+		borderRadius : 6
+	}
 });

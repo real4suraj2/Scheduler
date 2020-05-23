@@ -4,36 +4,24 @@ import {
 	View,
 	Text,
 	StyleSheet,
-	TextInput,
-	Dimensions,
 	TouchableOpacity,
-	Keyboard,
-	Alert,
+	Dimensions,
+	Image,
 	AsyncStorage,
 } from "react-native";
 
-//Navigation Library
-import { StackActions } from "@react-navigation/native";
-
-//Icons
-import { Feather } from "@expo/vector-icons";
-
-//Constants
+//Constant
 import { db } from "../constants/firebase-config";
 
 //Components
-import FoundPlaces from "../components/FoundPlaces";
 import Loading from "../components/Loading";
 
 const { width, height } = Dimensions.get("window");
 
 export default ({ navigation }) => {
-	const [text, setText] = useState("");
-	const [search, setSearch] = useState(null);
-	const [all, showAll] = useState(false);
-	const [loading, setLoading] = useState(false);
-	const [id, setId] = useState(null);
-	const [showSchedule, setShowSchedule] = useState(false);
+	const [id, setId] = useState("");
+	const [data, setData] = useState({});
+	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
 		const _retreiveData = async () => {
@@ -42,8 +30,8 @@ export default ({ navigation }) => {
 		};
 		_retreiveData();
 	});
-
 	useEffect(() => {
+		if (id == "") return;
 		const interval = setInterval(() => {
 			db.ref("slots")
 				.child(id)
@@ -61,8 +49,8 @@ export default ({ navigation }) => {
 									expiresAt: null,
 									place: null,
 								});
+								setLoading(false);
 							} else {
-								setShowSchedule(false);
 								setLoading(false);
 								db.ref("places")
 									.child(place)
@@ -70,15 +58,13 @@ export default ({ navigation }) => {
 										"value",
 										(snapshot) => {
 											const info = snapshot.val();
-											navigation.dispatch(
-												StackActions.replace("Slot", {
-													slot,
-													expiresAt,
-													place,
-													info,
-													id,
-												})
-											);
+											setData({
+												slot,
+												expiresAt,
+												place,
+												info,
+												id,
+											});
 											clearInterval(interval);
 										},
 										(error) => {}
@@ -93,60 +79,62 @@ export default ({ navigation }) => {
 		}, 1000);
 		return () => clearInterval(interval);
 	}, [id]);
-
 	return (
 		<View style={{ ...styles.container }}>
 			<View
-				style={{ flex: 0.2, justifyContent: "flex-end", marginTop: 16 }}
+				style={{
+					flex: 0.4,
+					alignItems: "center",
+				}}
 			>
-				<View style={{ ...styles.inputContainer }}>
-					<Feather name="search" size={24} color="gray" />
-					<TextInput
-						value={text}
-						style={{ ...styles.input }}
-						placeholder="Enter Destination"
-						onChangeText={(value) => {
-							setText(value);
-						}}
-					/>
-				</View>
-				<TouchableOpacity
-					style={{ ...styles.search }}
-					onPress={() => {
-						Keyboard.dismiss();
-						showAll(false);
-						const val = text.toLowerCase();
-						if (val.length < 4) {
-							Alert.alert(
-								"Search Error",
-								"Your searched string length should be greater or equal to 4",
-								[{ text: "OK", onPress: () => {} }],
-								{ cancelable: true }
-							);
-						} else {
-							setSearch(val);
-						}
-						setText("");
-					}}
-				>
-					<Text style={{ ...styles.searchText }}> Search </Text>
-				</TouchableOpacity>
-			</View>
-			<View style={{ flex: 0.7 }}>
-				<FoundPlaces
-					search={search}
-					all={all}
-					setLoading={setLoading}
-					showSchedule={showSchedule}
-					setShowSchedule={setShowSchedule}
+				<Image
+					source={require("../assets/images/icon.jpg")}
+					resizeMode="contain"
+					style={{ ...styles.image }}
 				/>
 			</View>
-			<View style={{ flex: 0.1, justifyContent: "flex-end" }}>
+			<View style={{ ...styles.container, flex: 0.6 }}>
 				<TouchableOpacity
-					style={{ ...styles.showAllContainer }}
-					onPress={() => showAll(true)}
+					style={{ ...styles.mainButton, marginTop: 12 }}
+					onPress={() => navigation.navigate("Slot", { ...data })}
 				>
-					<Text style={{ ...styles.showAll }}>Show All</Text>
+					<Text
+						style={{
+							...styles.mainHeading,
+							fontSize: 18,
+							color: "#000",
+						}}
+					>
+						My E-Pass
+					</Text>
+				</TouchableOpacity>
+				<TouchableOpacity
+					style={{ ...styles.mainButton, marginTop: 12 }}
+					onPress={() => navigation.navigate("ScheduleVisit")}
+				>
+					<Text
+						style={{
+							...styles.mainHeading,
+							fontSize: 18,
+							color: "#000",
+						}}
+					>
+						Schedule Visit
+					</Text>
+				</TouchableOpacity>
+				<TouchableOpacity
+					style={{ ...styles.mainButton, marginTop: 12 }}
+					onPress={() => {}}
+				>
+					<Text
+						style={{
+							...styles.mainHeading,
+							fontSize: 18,
+							color: "#000",
+						}}
+					>
+						Past Visits
+					</Text>
 				</TouchableOpacity>
 			</View>
 			{loading && <Loading />}
@@ -161,42 +149,20 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		backgroundColor: "#fff",
 	},
-	inputContainer: {
-		flexDirection: "row",
+	mainButton: {
 		width: width * 0.85,
-		justifyContent: "space-between",
-		alignItems: "center",
-	},
-	input: {
-		width: width * 0.75,
-		borderBottomWidth: StyleSheet.hairlineWidth,
-		paddingHorizontal: 12,
+		paddingHorizontal: 16,
 		paddingVertical: 6,
-	},
-	search: {
-		width: width * 0.85,
-		paddingHorizontal: 12,
-		paddingVertical: 6,
-		borderWidth: StyleSheet.hairlineWidth,
-		borderRadius: 6,
-		marginTop: 16,
-	},
-	searchText: {
-		textAlign: "center",
-		fontWeight: "bold",
-	},
-	showAllContainer: {
-		backgroundColor: "#39CCCC",
-		width: width * 0.85,
-		paddingVertical: 6,
-		paddingHorizontal: 18,
 		borderRadius: 6,
 		marginBottom: 12,
+		borderWidth: StyleSheet.hairlineWidth,
 	},
-	showAll: {
-		color: "#fff",
-		fontSize: 18,
-		textAlign: "center",
+	mainHeading: {
+		fontSize: 32,
 		fontWeight: "bold",
+		textAlign: "center",
+	},
+	image: {
+		width: width * 0.85,
 	},
 });

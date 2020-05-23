@@ -20,12 +20,16 @@ import Animated, { Easing } from "react-native-reanimated";
 import * as Facebook from "expo-facebook";
 import * as Google from "expo-google-app-auth";
 
+//Helpers
+import navigationReset from '../helpers/navigationReset';
+
 //Configs
 import {
 	FACEBOOK_APP_ID,
 	GOOGLE_ANDROID_ID,
 	GOOGLE_STANDALONE_APP_ID,
 } from "../constants/social-config";
+
 import { db } from "../constants/firebase-config";
 
 const { width, height } = Dimensions.get("window");
@@ -51,6 +55,7 @@ export default ({ navigation, translateY, setLoading }) => {
 			await AsyncStorage.setItem("token", token);
 		};
 		await _setData();
+		navigationReset(navigation, "Home");
 		navigation.navigate("Home");
 	};
 

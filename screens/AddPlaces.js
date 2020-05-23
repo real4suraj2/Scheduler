@@ -96,7 +96,7 @@ export default ({ navigation }) => {
 		Alert.alert(
 			"Successful",
 			`Please write down the UUID for password generation\nUID: ${uuid}`,
-			[{ text: "OK", onPress: () => navigation.push("Dashboard") }],
+			[{ text: "OK", onPress: () => navigation.push("Home") }],
 			{ cancelable: false }
 		);
 	};

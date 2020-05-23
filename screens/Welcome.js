@@ -55,7 +55,8 @@ export default ({ navigation }) => {
 					transform: [{ translateY: translateY }],
 				}}
 			>
-				<View style={{ flex: 0.3, marginTop: 32 }}>
+				<View style={{ flex: 0.3 }}>
+					{/*
 					<Text
 						style={{
 							...styles.mainHeading,
@@ -81,34 +82,31 @@ export default ({ navigation }) => {
 					>
 						Scheduling made easier..
 					</Text>
+					*/}
+					<Image
+						source={require("../assets/images/welcome.jpg")}
+						style={{ ...styles.welcome }}
+					/>
 				</View>
 				<View
 					style={{
-						flex: 0.5,
+						flex: 0.4,
 						justifyContent: "flex-start",
 					}}
 				>
 					<Image
-						source={require("../assets/tick.jpg")}
+						source={require("../assets/images/icon.jpg")}
 						resizeMode="contain"
 						style={{ ...styles.mainImage }}
 					/>
-					<TouchableOpacity
-						onPress={() => navigation.navigate("MockLogin")}
-						style={{
-							alignItems: "flex-end",
-							marginRight: 28,
-						}}
-					>
-						<Text style={{ ...styles.mockLogin }}>Mock Login</Text>
-					</TouchableOpacity>
 				</View>
 
 				<View
 					style={{
-						flex: 0.2,
-						justifyContent: "flex-end",
+						flex: 0.3,
+						justifyContent: "flex-start",
 						marginBottom: 16,
+						top: -24,
 					}}
 				>
 					<TouchableOpacity
@@ -133,7 +131,7 @@ export default ({ navigation }) => {
 									color: "#fff",
 								}}
 							>
-								Login
+								User Login
 							</Text>
 						</LinearGradient>
 					</TouchableOpacity>
@@ -151,12 +149,37 @@ export default ({ navigation }) => {
 								color: "#fff",
 							}}
 						>
-							Login As Merchant
+							Merchant Login
+						</Text>
+					</TouchableOpacity>
+					<TouchableOpacity
+						onPress={() => navigation.navigate("MockLogin")}
+						style={{
+							...styles.mainButton,
+							backgroundColor: "#85144b",
+						}}
+					>
+						<Text
+							style={{
+								...styles.mainHeading,
+								fontSize: 18,
+								color: "#fff",
+							}}
+						>
+							Proposed Future Login
+						</Text>
+					</TouchableOpacity>
+					<TouchableOpacity
+						style={{ marginBottom: 12 }}
+						onPress={() => setShowTerms(true)}
+					>
+						<Text style={{ ...styles.subButton }}>
+							Trouble Logging In?
 						</Text>
 					</TouchableOpacity>
 					<TouchableOpacity onPress={() => setShowTerms(true)}>
 						<Text style={{ ...styles.subButton }}>
-							Terms of service{" "}
+							Terms of service
 						</Text>
 					</TouchableOpacity>
 				</View>
@@ -202,6 +225,7 @@ const styles = StyleSheet.create({
 	mainImage: {
 		width,
 		height: 350,
+		top: -80,
 	},
 	mainButton: {
 		width: width * 0.85,
@@ -219,8 +243,8 @@ const styles = StyleSheet.create({
 		position: "absolute",
 		top: height + 100,
 	},
-	mockLogin: {
-		textDecorationLine: "underline",
-		color: "gray",
+	welcome: {
+		width,
+		height: "100%",
 	},
 });
