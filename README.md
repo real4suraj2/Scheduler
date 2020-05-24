@@ -1,3 +1,4 @@
+![Logo](assets/icon.png?raw=true)
 # Scheduler
 
 ## Installation Steps (Only for Android Devices)
@@ -8,3 +9,15 @@
 4.  Make sure you are on expo version `3.20.9 or higher`, you can check it by executing `expo --version` in your terminal
 5.  Run the application by executing `expo start` and choose method of your choice.
 6.  You can build the application by executing `expo build:android`
+
+# App Wireframe
+![Wireframe](assets/Wireframe.jpg?raw=true)
+
+# Flowchart
+![Flowchart](assets/Flowchart.png?raw=true)
+
+# Technology Stack and Roadmap
+
+![TechStack](assets/TechnologyStack.JPG?raw=true)
+![Roadmap](assets/Roadmap.JPG?raw=true)
+
