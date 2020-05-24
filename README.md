@@ -18,6 +18,5 @@
 
 # Technology Stack and Roadmap
 
-![TechStack](assets/TechnologyStack.JPG?raw=true)
+![TechStack](assets/Technology%20Stack.JPG?raw=true)
 ![Roadmap](assets/Roadmap.JPG?raw=true)
-
