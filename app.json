@@ -16,7 +16,8 @@
 		},
 		"assetBundlePatterns": ["**/*"],
 		"ios": {
-			"supportsTablet": true
+			"supportsTablet": true,
+			"bundleIdentifier": "com.surajapps.scheduler"
 		},
 		"android": {
 			"package": "com.surajapps.scheduler",

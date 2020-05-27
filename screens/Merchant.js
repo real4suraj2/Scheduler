@@ -10,6 +10,7 @@ import {
 	Alert,
 	Keyboard,
 	FlatList,
+	ScrollView,
 } from "react-native";
 
 //Icons
@@ -219,81 +220,96 @@ export default ({ navigation }) => {
 				</View>
 			)}
 			{!showLogin && (
-				<View style={{ ...styles.container }}>
-					<View
-						style={{
-							flex: 0.4,
-							justifyContent: "flex-end",
-							alignItems: "center",
-						}}
-					>
-						<Text
-							style={{ ...styles.mainHeading, marginBottom: 12 }}
-						>
-							Info
-						</Text>
-						<Text style={{ ...styles.text }}>
-							Name : {details.name}
-						</Text>
-						<Text style={{ ...styles.text }}>
-							Address : {details.address}
-						</Text>
-						<Text style={{ ...styles.text, marginBottom: 12 }}>
-							Permissible Allowance / Hr : {details.name}
-						</Text>
-						<TouchableOpacity
-							onPress={() => setShowScanner(true)}
+				<ScrollView>
+					<View style={{ ...styles.container }}>
+						<View
 							style={{
-								...styles.validateContainer,
+								flex: 0.4,
+								justifyContent: "flex-end",
+								alignItems: "center",
 							}}
 						>
-							<Text style={{ ...styles.text }}>
-								Validate Customer{"  "}
+							<Text
+								style={{
+									...styles.mainHeading,
+									marginBottom: 12,
+								}}
+							>
+								Info
 							</Text>
-							<Feather name="camera" size={32} color="#000" />
-						</TouchableOpacity>
-					</View>
-					<View style={{ flex: 0.2, justifyContent: "center" }}>
-						<Text style={{ ...styles.mainHeading }}>Visitors</Text>
-					</View>
-					<View style={{ flex: 0.4, justifyContent: "flex-start" }}>
-						<FlatList
-							keyExtractor={(item, index) => `${index}`}
-							data={visitors == null ? [] : Object.keys(visitors)}
-							renderItem={({ item, index }) => {
-								if (visitors[item] == null) return null;
-								return (
-									<View
-										style={{ ...styles.visitorContainer }}
-									>
-										<Text
+							<Text style={{ ...styles.text }}>
+								Name : {details.name}
+							</Text>
+							<Text style={{ ...styles.text }}>
+								Address : {details.address}
+							</Text>
+							<Text style={{ ...styles.text, marginBottom: 12 }}>
+								Permissible Allowance / Hr : {details.name}
+							</Text>
+							<TouchableOpacity
+								onPress={() => setShowScanner(true)}
+								style={{
+									...styles.validateContainer,
+								}}
+							>
+								<Text style={{ ...styles.text }}>
+									Validate Customer{"  "}
+								</Text>
+								<Feather name="camera" size={32} color="#000" />
+							</TouchableOpacity>
+						</View>
+						<View style={{ flex: 0.2, justifyContent: "center" }}>
+							<Text style={{ ...styles.mainHeading }}>
+								Visitors
+							</Text>
+						</View>
+						<View
+							style={{ flex: 0.4, justifyContent: "flex-start" }}
+						>
+							<FlatList
+								keyExtractor={(item, index) => `${index}`}
+								data={
+									visitors == null
+										? []
+										: Object.keys(visitors)
+								}
+								renderItem={({ item, index }) => {
+									if (visitors[item] == null) return null;
+									return (
+										<View
 											style={{
-												...styles.text,
-												fontSize: 16,
-												fontStyle: "italic",
+												...styles.visitorContainer,
 											}}
 										>
-											{item}
-										</Text>
-										<Text
-											style={{
-												...styles.text,
-												fontSize: 16,
-											}}
-										>
-											{visitors[item]}
-										</Text>
-									</View>
-								);
-							}}
+											<Text
+												style={{
+													...styles.text,
+													fontSize: 16,
+													fontStyle: "italic",
+												}}
+											>
+												{item}
+											</Text>
+											<Text
+												style={{
+													...styles.text,
+													fontSize: 16,
+												}}
+											>
+												{visitors[item]}
+											</Text>
+										</View>
+									);
+								}}
+							/>
+						</View>
+						<Scanner
+							showScanner={showScanner}
+							setShowScanner={setShowScanner}
+							visitors={visitors == null ? {} : visitors}
 						/>
 					</View>
-					<Scanner
-						showScanner={showScanner}
-						setShowScanner={setShowScanner}
-						visitors={visitors == null ? {} : visitors}
-					/>
-				</View>
+				</ScrollView>
 			)}
 			{loading && <Loading />}
 		</View>

@@ -8,6 +8,7 @@ import {
 	Dimensions,
 	TouchableOpacity,
 	Alert,
+	Clipboard,
 } from "react-native";
 
 //Picker Library
@@ -96,7 +97,10 @@ export default ({ navigation }) => {
 		Alert.alert(
 			"Successful",
 			`Please write down the UUID for password generation\nUID: ${uuid}`,
-			[{ text: "OK", onPress: () => navigation.push("Home") }],
+			[
+				{ text: "OK", onPress: () => navigation.push("Home") },
+				{ text: "Copy", onPress: () => Clipboard.setString(uuid) },
+			],
 			{ cancelable: false }
 		);
 	};

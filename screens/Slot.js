@@ -20,6 +20,9 @@ import { LinearGradient } from "expo-linear-gradient";
 //Icons
 import { AntDesign } from "@expo/vector-icons";
 
+//Expo Deep Linking
+import * as Linking from "expo-linking";
+
 //Constants
 import { db } from "../constants/firebase-config";
 
@@ -33,14 +36,15 @@ import Loading from "../components/Loading";
 const { width, height } = Dimensions.get("window");
 
 export default ({ navigation, route }) => {
-	
-	if(route.params == undefined || route.params.slot == undefined){
+	if (route.params == undefined || route.params.slot == undefined) {
 		return (
-			<View style={{...styles.container}}>
-				<AntDesign name="creditcard" size={90} color="#000"/>
-				<Text style={{...styles.mainHeading, fontSize: 24}}>You Haven't Occupied A Slot Yet</Text>
+			<View style={{ ...styles.container }}>
+				<AntDesign name="creditcard" size={90} color="#000" />
+				<Text style={{ ...styles.mainHeading, fontSize: 24 }}>
+					You Haven't Occupied A Slot Yet
+				</Text>
 			</View>
-		)
+		);
 	}
 	const { slot, expiresAt, place, info, id } = route.params;
 	//-------------Mock Data----------------
@@ -59,12 +63,12 @@ export default ({ navigation, route }) => {
 	const [valid, setValid] = useState(false);
 
 	useLayoutEffect(() => {
-    	navigation.setOptions({
-      		headerStyle:{
-      			backgroundColor:"#F012BE"
-      		}
-    	});
-  	}, [navigation]);
+		navigation.setOptions({
+			headerStyle: {
+				backgroundColor: "#F012BE",
+			},
+		});
+	}, [navigation]);
 
 	useEffect(() => {
 		const interval = setInterval(() => {
@@ -108,6 +112,19 @@ export default ({ navigation, route }) => {
 					<Text style={{ ...styles.text }}>
 						Address: {info.address}
 					</Text>
+					<TouchableOpacity
+						onPress={() =>
+							Linking.openURL(
+								"https://www.google.com/maps/search/?api=1&query=" +
+									encodeURIComponent(info.address)
+							)
+						}
+						style={{ ...styles.mapsButtonContainer }}
+					>
+						<Text style={{ ...styles.mapsButton }}>
+							Show in Maps
+						</Text>
+					</TouchableOpacity>
 					<Text style={{ ...styles.text }}>
 						Permissible Allowance/ Hr: {info.range}
 					</Text>
@@ -263,5 +280,14 @@ const styles = StyleSheet.create({
 		fontSize: 18,
 		textAlign: "center",
 		fontWeight: "bold",
+	},
+	mapsButtonContainer: {
+		alignItems: "center",
+		justifyContent: "flex-start",
+		marginTop: -2,
+	},
+	mapsButton: {
+		textDecorationLine: "underline",
+		color: "#fff",
 	},
 });

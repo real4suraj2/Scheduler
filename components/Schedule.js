@@ -120,6 +120,7 @@ export default ({ showSchedule, setShowSchedule, id, range }) => {
 	const handleOccupySlot = async () => {
 		setLoading(true);
 		const val = slot;
+		if (val == "") return setLoading(false);
 		const stat = status[val].status;
 		if (
 			stat != "nonWorkingHrs" &&
