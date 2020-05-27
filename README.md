@@ -1,4 +1,4 @@
-![Logo](assets/icon.png?raw=true)
+![Logo](assets/icony.png?raw=true)
 # Scheduler
 
 ## Installation Steps (Only for Android Devices)
