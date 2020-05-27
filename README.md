@@ -14,7 +14,7 @@
 ![Wireframe](assets/Wireframe.jpg?raw=true)
 
 # Flowchart
-![Flowchart](assets/Flowchart.png?raw=true)
+![Flowchart](assets/Flowchart_updated.png?raw=true)
 
 # Technology Stack and Roadmap
 
