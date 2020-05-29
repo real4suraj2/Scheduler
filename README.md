@@ -1,4 +1,6 @@
 ![Logo](assets/icony.png?raw=true)
+![Logo](assets/link.jpg?raw=true)
+[Crack the Covid-19 Crisis- Suvidha](https://youtu.be/HYGX2y25o6M)
 # Scheduler
 
 ## Installation Steps (Only for Android Devices)
